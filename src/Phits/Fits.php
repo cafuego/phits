@@ -4,7 +4,7 @@
  * Parses a FITS file into a structured object.
  */
 
-namespace Cafuego\Phits;
+namespace \Phits;
 
 // A few defines from the FITS standard. We use these to read and parse headers.
 define('FITS_LINE_LENGTH',  80);

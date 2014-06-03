@@ -13,7 +13,7 @@ USAGE
 -----
 ```
 <?php
-  use \Cafuego\Phits;
+  use \Phits\Fits;
 
   $fits = new Fits('/tmp/foobar.fits');
 
