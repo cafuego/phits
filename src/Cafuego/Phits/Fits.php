@@ -174,12 +174,14 @@ class Fits {
 
     } while (!feof($fp) && !$end);
 
-    // Populate naxis.
+    // Populate naxis, but only if it exists for the header group.
     foreach ($this->hdus as $hdu) {
       $naxis = [];
-      $n = intval($hdu['NAXIS']);
-      for ($i = 1; $i <= $n; $i++) {
-        $naxis[$i] = intval($hdu['NAXIS' . $i]);
+      if (!empty($hdu['NAXIS'])) {
+        $n = intval($hdu['NAXIS']);
+        for ($i = 1; $i <= $n; $i++) {
+          $naxis[$i] = intval($hdu['NAXIS' . $i]);
+        }
       }
       $this->naxis[] = $naxis;
     }
