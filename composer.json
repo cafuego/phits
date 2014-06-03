@@ -1,8 +1,19 @@
 {
-  "name": "cafuego/fits",
+  "name": "cafuego/phits",
+  "desciption": "A class library that allows you to access FITS file headers in PHP.",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Peter Lieverdink",
+      "email": "me@cafuego.net"
+    }
+  ],
   "autoload": {
     "psr-0" : {
       "Cafuego\\Phits" : "src"
     }
   }
+  "require": {
+    "php": ">=5.4.0"
+  },
 }
