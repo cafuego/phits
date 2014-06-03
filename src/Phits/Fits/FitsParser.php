@@ -1,6 +1,6 @@
 <?php
 /**
- * @file Parser.php
+ * @file FitsParser.php
  * Parses a FITS file into a structured object.
  */
 
@@ -79,11 +79,11 @@ class FitsParser implements FitsInterface {
       $keys = [];
       $naxis = [];
 
-      $block = fread($fp, FITS::FITS_BLOCK_LENGTH);
+      $block = fread($fp, Fits::FITS_BLOCK_LENGTH);
 
       // Read the headers in each block.
-      for ($i = 0; $i < FITS::FITS_BLOCK_LINES; $i++) {
-        $line = substr($block, $i * FITS::FITS_LINE_LENGTH, ($i+1) * FITS::FITS_LINE_LENGTH);
+      for ($i = 0; $i < Fits::FITS_BLOCK_LINES; $i++) {
+        $line = substr($block, $i * Fits::FITS_LINE_LENGTH, ($i+1) * Fits::FITS_LINE_LENGTH);
 
         $previous = $key;
         $key = trim(substr($line, 0, 8));
