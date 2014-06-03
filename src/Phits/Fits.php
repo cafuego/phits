@@ -6,16 +6,20 @@
 
 namespace \Phits;
 
-// A few defines from the FITS standard. We use these to read and parse headers.
-define('FITS_LINE_LENGTH',  80);
-define('FITS_BLOCK_LENGTH', 2880);
-define('FITS_BLOCK_LINES',  36);
-
-
 /**
  * The FITS parser!
  */
 class Fits {
+
+
+  // A header block is 2880 bytes.
+  const FITS_BLOCK_LENGTH = 2880;
+
+  // A header is 80 bytes.
+  const FITS_LINE_LENGTH  = 80;
+
+  // A header block can contain up to 36 headers.
+  const FITS_BLOCK_LINES  = 36;
 
   /**
    * Array of FITS header blocks.
@@ -75,11 +79,11 @@ class Fits {
       $keys = [];
       $naxis = [];
 
-      $block = fread($fp, FITS_BLOCK_LENGTH);
+      $block = fread($fp, FITS::FITS_BLOCK_LENGTH);
 
       // Read the headers in each block.
-      for ($i = 0; $i < FITS_BLOCK_LINES; $i++) {
-        $line = substr($block, $i * FITS_LINE_LENGTH, ($i+1) * FITS_LINE_LENGTH);
+      for ($i = 0; $i < FITS::FITS_BLOCK_LINES; $i++) {
+        $line = substr($block, $i * FITS::FITS_LINE_LENGTH, ($i+1) * FITS::FITS_LINE_LENGTH);
 
         $previous = $key;
         $key = trim(substr($line, 0, 8));
