@@ -11,7 +11,7 @@
   ],
   "autoload": {
     "psr-0" : {
-      "Cafuego\\Phits" : "src"
+      "\\Phits\\Fits" : "src"
     }
   },
   "require": {
