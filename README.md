@@ -13,9 +13,9 @@ USAGE
 -----
 ```
 <?php
-  use \Phits\Fits;
+  use Phits\Fits\FitsParser;
 
-  $fits = new Fits('/tmp/foobar.fits');
+  $fits = new FitsParser('/tmp/foobar.fits');
 
   $headers = $fits->getHeaders();
   $naxis   = $fits->getNaxis(0);
