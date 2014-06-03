@@ -10,4 +10,4 @@ before_script:
 
 script:
 - vendor/bin/phpcs --standard=PSR1 --extensions=php --ignore=vendor/* .
-- vendor/bin/phpunit UnitTest ./tests/Phits/Fits/TestFits.php
+- vendor/bin/phpunit ./tests/Phits/Fits/TestFits
