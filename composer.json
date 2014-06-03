@@ -2,7 +2,7 @@
   "name": "cafuego/fits",
   "autoload": {
     "psr-0" : {
-      "Cafuego\\Fits" : "src"
+      "Cafuego\\Phits" : "src"
     }
   }
 }
