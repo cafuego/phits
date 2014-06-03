@@ -1,15 +1,15 @@
 <?php
 /**
- * @file Fits.php
+ * @file Parser.php
  * Parses a FITS file into a structured object.
  */
 
-namespace \Phits;
+namespace Phits\Fits;
 
 /**
  * The FITS parser!
  */
-class Fits {
+class FitsParser implements FitsInterface {
 
 
   // A header block is 2880 bytes.
