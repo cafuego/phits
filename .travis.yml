@@ -13,4 +13,4 @@ before_script:
 
 script:
 - vendor/bin/phpcs --standard=PSR1 --extensions=php --ignore=vendor/* .
-- vendor/bin/phpunit ./tests/Phits/Fits/TestFits
+- vendor/bin/phpunit ./tests/Phits/Tests/TestFits.php
