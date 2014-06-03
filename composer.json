@@ -2,6 +2,7 @@
   "name": "cafuego/phits",
   "desciption": "A class library that allows you to access FITS file headers in PHP.",
   "license": "MIT",
+  "homepage": "https://github.com/cafuego/phits",
   "authors": [
     {
       "name": "Peter Lieverdink",
