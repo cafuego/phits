@@ -11,7 +11,6 @@ namespace Phits\Fits;
  */
 class FitsParser implements FitsInterface {
 
-
   // A header block is 2880 bytes.
   const FITS_BLOCK_LENGTH = 2880;
 
