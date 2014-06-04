@@ -12,5 +12,5 @@ before_script:
 - composer install --prefer-source --dev
 
 script:
-- vendor/bin/phpcs --standard=PSR1 --extensions=php --ignore=vendor/* .
+- phpcs --standard=PSR1 --extensions=php --ignore=vendor/* .
 - vendor/bin/phpunit ./tests/Phits/Tests/TestFits.php
