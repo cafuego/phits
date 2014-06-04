@@ -15,8 +15,8 @@
     }
   ],
   "autoload": {
-    "classmap": [
-      "src/"
+    "psr-0": {
+      "Phits\\Fits": "src/"
     ]
   },
   "require": {

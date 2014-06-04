@@ -64,8 +64,34 @@ class TestFits Extends \PHPUnit_Framework_TestCase {
 
     $count = count($naxis);
     $this->assertEquals($count, 5, 'Loaded 5 naxis blocks.');
+  }
+
+  /**
+   * Test the NAXIS header matches the naxis data.
+   */
+  public function testNaxisData() {
+    $file = dirname(__FILE__) . '/data/testkeys.fits';
+    $fits = new FitsParser($file);
+
+    // Check the naxis block contains as many values as the header says.
+    $headers = $fits->getHeaders(0);
+    $naxis = $fits->getNaxis();
+    $wanted = $headers[0]['NAXIS'];
 
     $block = count($naxis[0]);
-    $this->assertEquals($block, 2, 'Found 2 naxis in first block.');
+    $this->assertEquals($block, $wanted, 'Found correct number of naxis in first block.');
+  }
+
+  /**
+   * Test the data in a real FITS file (from BRT).
+   */
+  public function testFileData() {
+    $file = dirname(__FILE__) . '/data/brt-210055.fits';
+    $fits = new FitsParser($file);
+
+    $headers = $fits->getHeaders();
+
+    $this->assertEquals($headers[0]['OBJECT'], 'M8', 'File contains Lagoon nebula data.');
+    $this->assertEquals($headers[0]['TELESCOP'], 'BRT Galaxy Camera', 'Data from BRT Galaxy Camera.');
   }
 }
