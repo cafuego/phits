@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="./src/autoload.php" colors="true">
-  <php>
-    <!-- <server name="SYMFONY" value="/path/to/symfony" /> -->
-  </php>
+<phpunit backupGlobals="false"
+         backupStaticAttributes="false"
+         bootstrap="vendor/autoload.php">
+
   <testsuites>
-    <testsuite name="Phits Test Suite">
-      <directory>./tests/Phits/Tests</directory>
+    <testsuite name="FITS_ParserTest">
+      <directory suffix="Test.php">tests/Phits</directory>
     </testsuite>
   </testsuites>
+
+  <logging>
+    <log type="coverage-html" target="build/coverage"/>
+    <log type="coverage-clover" target="build/logs/clover.xml"/>
+    <log type="junit" target="build/logs/junit.xml" logIncompleteSkipped="false"/>
+  </logging>
+
+  <filter>
+    <whitelist addUncoveredFilesFromWhitelist="true">
+      <directory suffix=".php">src</directory>
+    </whitelist>
+  </filter>
 </phpunit>
