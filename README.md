@@ -30,6 +30,8 @@ used both of them to help me write this parser:
 * https://github.com/astrojs/fitsjs
 * https://github.com/siravan/fits
 
+Phits inherits the MIT license from these other projects.
+
 As opposed to the Go parser, Phits also handles CONTINUE headers for longer
 string comments.
 
