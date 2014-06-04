@@ -21,9 +21,9 @@ class Fits {
   const FITS_BLOCK_LINES  = 36;
 
   // The JPEG thumbnail format.
-  const FITS_THUMBNAIL_JPEG = 'jpeg';
+  const FITS_FORMAT_JPEG = 'JPG';
 
   // The PNG thumbnail format.
-  const FITS_THUMBNAIL_PNG  = 'png';
+  const FITS_FORMAT_PNG  = 'PNG';
 
 }

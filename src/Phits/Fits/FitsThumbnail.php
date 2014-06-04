@@ -6,6 +6,8 @@
 
 namespace Phits\Fits;
 
+use Imagick;
+
 /**
  * The FITS thumbnailer!
  *
@@ -45,6 +47,11 @@ class FitsThumbnail implements FitsThumbnailInterface {
   private $width = 0;
 
   /**
+   * Should the generated thumbnail persist?
+   */
+  private $persist = TRUE;
+
+  /**
    * Constructor function.
    *
    * @param $filename
@@ -54,13 +61,29 @@ class FitsThumbnail implements FitsThumbnailInterface {
    * @param $quality
    *   The compression level, as a percentage.
    */
-  public function __construct($filename, $format = Fits::FORMAT_JPEG, $quality = 60) {
+  public function __construct($filename, $format = Fits::FITS_FORMAT_JPEG, $quality = 60) {
     if (!file_exists($filename)) {
       throw new FitsException('File ' . $filename . ' does not exist.');
     }
     $this->fitsfile = $filename;
     $this->format   = $format;
     $this->quality  = $quality;
+  }
+
+  /**
+   * Tidy up as needed.
+   */
+  public function __destruct() {
+    if (!$this->persist && file_exists($this->thumbnail)) {
+      unlink($this->thumbnail);
+    }
+  }
+
+  /**
+   * Set the persistence flag.
+   */
+  public function persist($persist = TRUE) {
+    $this->persist = $persist;
   }
 
   /**
@@ -75,11 +98,11 @@ class FitsThumbnail implements FitsThumbnailInterface {
 
     $im->setImageColorspace(255);
 
-    if ($compression = $this->setCompression($format)) {
+    if ($compression = $this->setCompression($this->format)) {
       $im->setCompression($compression);
-      $im->setCompressionQuality($quality);
+      $im->setCompressionQuality($this->quality);
     }
-    $im->setImageFormat($format);
+    $im->setImageFormat($this->format);
 
     // Store the size.
     $this->width  = $x;
@@ -116,7 +139,7 @@ class FitsThumbnail implements FitsThumbnailInterface {
    */
   public function setFormat($format) {
     $formats = $this->supportedFormats();
-    if (!in_array(strtoupper($format) $formats)) {
+    if (!in_array(strtoupper($format), $formats)) {
       throw new FitsException('Thumbnail format "' . $format . '" is not supported.');
     }
     $this->format = $format;
@@ -144,7 +167,7 @@ class FitsThumbnail implements FitsThumbnailInterface {
   private function setCompression($format) {
     switch ($format) {
     case Fits::FITS_FORMAT_JPEG:
-      return Imagick::COMPRESSION_JPEG
+      return Imagick::COMPRESSION_JPEG;
     }
     return NULL;
   }
