@@ -10,5 +10,8 @@ before_install:
 install:
 - composer install --prefer-source --dev
 
+before_script:
+- printf "\n" | pecl install imagick
+
 script:
 - vendor/bin/phpunit
