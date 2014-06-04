@@ -20,4 +20,10 @@ class Fits {
   // A header block can contain up to 36 headers.
   const FITS_BLOCK_LINES  = 36;
 
+  // The JPEG thumbnail format.
+  const FITS_THUMBNAIL_JPEG = 'jpeg';
+
+  // The PNG thumbnail format.
+  const FITS_THUMBNAIL_PNG  = 'png';
+
 }
