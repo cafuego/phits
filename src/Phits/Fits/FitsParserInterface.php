@@ -2,7 +2,7 @@
 
 namespace Phits\Fits;
 
-interface FitsInterface {
+interface FitsParserInterface {
   function getHeaders($idx);
   function getNaxis($idx);
 }

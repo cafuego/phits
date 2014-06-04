@@ -9,7 +9,7 @@ namespace Phits\Fits;
 /**
  * The FITS parser!
  */
-class FitsParser implements FitsInterface {
+class FitsParser implements FitsParserInterface {
 
   /**
    * Array of FITS header blocks.
