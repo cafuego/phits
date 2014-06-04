@@ -1,6 +1,11 @@
 {
   "name": "cafuego/phits",
   "description": "A class library that allows you to access FITS file headers in PHP.",
+  "type": "library",
+  "keywords": [
+    "astronomy",
+    "fits"
+  ],
   "license": "MIT",
   "homepage": "https://github.com/cafuego/phits",
   "authors": [
@@ -10,15 +15,14 @@
     }
   ],
   "autoload": {
-    "psr-0" : {
-      "\\Phits\\Fits" : "src"
-    }
+    "classmap": [
+      "src/"
+    ]
   },
   "require": {
     "php": ">=5.4.0"
   },
   "require-dev": {
     "phpunit/phpunit": "4.1.*"
-  },
-  "minimum-stability": "dev"
+  }
 }
