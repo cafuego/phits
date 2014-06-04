@@ -11,7 +11,7 @@ before_install:
 
 install:
 - export PATH="$HOME/.composer/vendor/bin:$PATH"
-- ln -sv $TRAVIS_BUILD_DIR/vendor/drupal/coder/coder_sniffer/Drupal
+- ln -sv $TRAVIS_BUILD_DIR/vendor/drupal/coder/coder_sniffer/Drupal $HOME/.composer/vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/Drupal
 - composer install --prefer-source --dev
 
 script:
