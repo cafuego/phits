@@ -6,14 +6,9 @@ php:
 
 before_install:
 - composer self-update
-- composer global require squizlabs/php_codesniffer:1.5.3
-- composer global require drush/drush:dev-master
 
 install:
-- export PATH="$HOME/.composer/vendor/bin:$PATH"
-- ln -sv $TRAVIS_BUILD_DIR/vendor/drupal/coder/coder_sniffer/Drupal $HOME/.composer/vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/Drupal
 - composer install --prefer-source --dev
 
 script:
-- phpcs --standard=Drupal --extensions=php --ignore=vendor/* .
 - vendor/bin/phpunit ./tests/Phits/Tests/TestFits.php
