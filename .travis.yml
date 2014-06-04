@@ -11,4 +11,4 @@ install:
 - composer install --prefer-source --dev
 
 script:
-- vendor/bin/phpunit ./tests/Phits/Tests/TestFits.php
+- vendor/bin/phpunit
