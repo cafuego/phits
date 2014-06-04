@@ -27,9 +27,14 @@ class FitsParser implements FitsInterface {
   public function __construct($filename) {
     $fp = fopen($filename, 'r');
     if (empty($fp)) {
-      throw new \Exception('Could not open file: ' . $filename);
+      throw new FitsException('Could not open file: ' . $filename);
     }
-    $this->parse($fp);
+    try {
+      $this->parse($fp);
+    } catch (FitsException $e) {
+      fclose($fp);
+      throw $e;
+    }
     fclose($fp);
   }
 
@@ -83,7 +88,7 @@ class FitsParser implements FitsInterface {
         }
 
         if (!preg_match('/^[A-Z0-9_-]{1,8}$/', $key)) {
-          throw new \Exception('Invalid header "' . $key . '" in file.');
+          throw new FitsException('Invalid header "' . $key . '" in file.');
         }
 
         $sep = substr($line, 8, 10);
@@ -196,7 +201,7 @@ class FitsParser implements FitsInterface {
 
       case 0:
         if (!$quote) {
-          throw new \Exception('String "' . $s .'" does not start with a quote.');
+          throw new FitsException('String "' . $s .'" does not start with a quote.');
         }
         $state = 1;
         break;
@@ -222,7 +227,7 @@ class FitsParser implements FitsInterface {
       }
 
     }
-    throw new \Exception('String "' . $s . '" ends prematurely.');
+    throw new FitsException('String "' . $s . '" ends prematurely.');
   }
 
 }
