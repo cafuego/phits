@@ -17,6 +17,11 @@ use Imagick;
 class FitsThumbnail implements FitsThumbnailInterface {
 
   /**
+   * The internal imagemagick object.
+   */
+  private $im = null;
+
+  /**
    * The FITS filename.
    */
   private $fitsfile = null;
@@ -65,15 +70,18 @@ class FitsThumbnail implements FitsThumbnailInterface {
     if (!file_exists($filename)) {
       throw new FitsException('File ' . $filename . ' does not exist.');
     }
-    $this->fitsfile = $filename;
-    $this->format   = $format;
-    $this->quality  = $quality;
+    $this->setFitsFile($filename);
+    $this->setFormat($format);
+    $this->setQuality($quality);
   }
 
   /**
    * Tidy up as needed.
    */
   public function __destruct() {
+    $this->im->clear();
+    $this->im->destroy();
+
     if (!$this->persist && file_exists($this->thumbnail)) {
       unlink($this->thumbnail);
     }
@@ -93,23 +101,21 @@ class FitsThumbnail implements FitsThumbnailInterface {
    *   The path to the generated thumbnail file.
    */
   public function createThumbnail($x = 150, $y = 150, $filename = null) {
-    // Create Imagick object
-    $im = new Imagick($this->fitsfile);
 
-    $im->setImageColorspace(255);
+    $this->im->setImageColorspace(255);
 
     if ($compression = $this->setCompression($this->format)) {
-      $im->setCompression($compression);
-      $im->setCompressionQuality($this->quality);
+      $this->im->setCompression($compression);
+      $this->im->setCompressionQuality($this->quality);
     }
-    $im->setImageFormat($this->format);
+    $this->im->setImageFormat($this->format);
 
     // Store the size.
     $this->width  = $x;
     $this->height = $y;
 
     // Resize
-    $im->resizeImage($x, $y, Imagick::FILTER_LANCZOS, 1);
+    $this->im->resizeImage($x, $y, Imagick::FILTER_LANCZOS, 1);
 
     // Generate a unique temporary filename if needed.
     if (empty($filename)) {
@@ -117,9 +123,7 @@ class FitsThumbnail implements FitsThumbnailInterface {
     }
 
     // Write image on server
-    $im->writeImage($filename);
-    $im->clear();
-    $im->destroy();
+    $this->im->writeImage($filename);
 
     $this->thumbnail = $filename;
   }
@@ -129,6 +133,16 @@ class FitsThumbnail implements FitsThumbnailInterface {
    */
   public function getThumbnail() {
     return $this->thumbnail;
+  }
+
+  /**
+   * Set the FITS file and create the imagick object.
+   */
+  public function setFitsFile($filename) {
+    $this->fitsfile = $filename;
+
+    // Create Imagick object
+    $this->im = new Imagick($this->fitsfile);
   }
 
   /**
@@ -176,6 +190,6 @@ class FitsThumbnail implements FitsThumbnailInterface {
    * Ask imagick what formats we support.
    */
   private function supportedFormats() {
-    return Imagick::queryFormats();
+    return $this->im->queryFormats();
   }
 }
