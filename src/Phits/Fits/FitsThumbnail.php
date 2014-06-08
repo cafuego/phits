@@ -143,7 +143,7 @@ class FitsThumbnail implements FitsThumbnailInterface {
    * Set the FITS file and create the imagick object.
    */
   public function setFitsFile($filename) {
-    $this->fitsfile = $filename;
+    $this->fitsfile = $filename . '[0]';
 
     // Create Imagick object
     $this->im = new Imagick($this->fitsfile);
