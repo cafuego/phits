@@ -100,27 +100,28 @@ class FitsThumbnail implements FitsThumbnailInterface {
    * @return
    *   The path to the generated thumbnail file.
    */
-  public function createThumbnail($x = 150, $y = 150, $filename = null) {
-
-    if ($compression = $this->setCompression($this->format)) {
-      $this->im->setCompression($compression);
-      $this->im->setCompressionQuality($this->quality);
-    }
+  public function createThumbnail($x = 0, $y = 0, $filename = null) {
 
     // Mess with the levels. This should be pretty safe for mostly black
-    // astro images.
-    $this->im->levelImage(0, 0.3, 35535);
+    // astro images. Determine dymaic range for level stretch.
+    $range = $this->im->getQuantumRange();
+    $this->im->levelImage(0, 0.2, $range['quantumRangeLong']/2);
 
     // Store the size.
-    $this->width  = $x;
-    $this->height = $y;
+    $this->width  = ($x == 0) ? $this->im->getImageWidth() : $x;
+    $this->height = ($y == 0) ? $this->im->getImageHeight() : $y;
 
-    // Resize
-    $this->im->resizeImage($x, $y, Imagick::FILTER_LANCZOS, 1);
+    // Resize and sharpen a bit.
+    $this->im->resizeImage($x, $y, Imagick::FILTER_LANCZOS, 0.8);
 
     // Generate a unique temporary filename if needed.
     if (empty($filename)) {
       $filename = tempnam(sys_get_temp_dir(), 'FitsThumbnail') . '.' . $this->format;
+    }
+
+    if ($compression = $this->setCompression($this->format)) {
+      $this->im->setCompression($compression);
+      $this->im->setCompressionQuality($this->quality);
     }
 
     // Set the output format.
