@@ -102,13 +102,14 @@ class FitsThumbnail implements FitsThumbnailInterface {
    */
   public function createThumbnail($x = 150, $y = 150, $filename = null) {
 
-    $this->im->setImageColorspace(255);
-
     if ($compression = $this->setCompression($this->format)) {
       $this->im->setCompression($compression);
       $this->im->setCompressionQuality($this->quality);
     }
-    $this->im->setImageFormat($this->format);
+
+    // Mess with the levels. This should be pretty safe for mostly black
+    // astro images.
+    $this->im->levelImage(0, 0.3, 35535);
 
     // Store the size.
     $this->width  = $x;
@@ -119,8 +120,11 @@ class FitsThumbnail implements FitsThumbnailInterface {
 
     // Generate a unique temporary filename if needed.
     if (empty($filename)) {
-      $filename = tempnam(sys_get_temp_dir(), 'FitsThumbnail');
+      $filename = tempnam(sys_get_temp_dir(), 'FitsThumbnail') . '.' . $this->format;
     }
+
+    // Set the output format.
+    $this->im->setImageFormat($this->format);
 
     // Write image on server
     $this->im->writeImage($filename);
