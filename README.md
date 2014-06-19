@@ -1,3 +1,8 @@
+# WELCOME
+
+[![Build Status](https://travis-ci.org/cafuego/phits.svg?branch=master)](https://travis-ci.org/cafuego/phits)
+
+
 phits - a FITS reader for PHP
 =============================
 
@@ -11,8 +16,8 @@ data into a thumbnail of a specified size and format. It will fail horribly
 if you do not have Imagick installed.
 
 
-USAGE
------
+# USAGE
+
 ```
 <?php
   use Phits\Fits\FitsParser;
