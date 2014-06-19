@@ -1,7 +1,6 @@
-# WELCOME
-
 [![Build Status](https://travis-ci.org/cafuego/phits.svg?branch=master)](https://travis-ci.org/cafuego/phits)
 
+# WELCOME
 
 phits - a FITS reader for PHP
 =============================
